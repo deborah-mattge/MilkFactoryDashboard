@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-12">
         
             <h1 class="text-black font-bold  text-4xl ">
-                PROCESSO:<b class="text-[#0A2463] font-bold" >CENTRIFUGAÇÃO</b>
+                PROCESSO:<b class="text-[#0A2463] font-bold" >{{procedimento}}</b>
             </h1>
 
         <div class="flex gap-[60px] items-center">
@@ -11,7 +11,7 @@
                     <div class="w-full">
                         <p class="font-semibold text-2xl text-[#6b6b6b]">produto sendo produzido:</p>
                             <p class="font-bold text-4xl bg-[#0A2463]  text-center text-white w-full py-14  rounded-2xl  ">
-                                LEITE UHT INTEGRAL
+                                {{tipo}}
                             </p>
                     </div>
                     <div class="w-full h-[310px] bg-[#EBEBEB] rounded-2xl flex items-center justify-center relative">
@@ -19,7 +19,7 @@
                             Temperatura
                         </p>
                         <p class="font-bold text-[100px] text-[#0A2463] w-[150px]">
-                            75°
+                            {{temperatura}}°
                         </p>
 
                     </div>
@@ -30,14 +30,14 @@
                         <p class="font-semibold text-2xl text-[#6b6b6b]">quantidade de leite em processo: </p>
                         <div class="w-full h-[282px] bg-[#7D0929] rounded-2xl flex items-center justify-center ">
                             <p class="font-bold text-[62px] text-white w-[150px]">
-                                700L
+                                {{quantidade}}L
                             </p>
                         </div>
                     </div>
                     <div>
                         <p class="font-semibold text-2xl text-[#6b6b6b]">tempo em processo: </p>
                             <p class="font-semibold text-[62px]  py-6 bg-[#0A2463] rounded-2xl text-center text-white w-full">
-                                00:00
+                                {{segundosFaltantes}}
                             </p>
                     </div>
 
@@ -60,7 +60,7 @@
                             <p class="font-semibold absolute top-20 text-3xl text-center text-black w-full"> Total </p>
 
                             <p class="font-bold text-[70px] text-black w-[100px]">
-                                75°
+                               {{gorduraTotal}}
                             </p>
                         </div>
 
@@ -70,14 +70,14 @@
                                 <p class="font-semibold text-start w-full text-3xl text-black px-4"> Descarte: </p>
 
                                 <p class="font-bold text-[70px] text-[#7D0929] w-[100px]">
-                                    75°
+                                    {{gordura}}
                                 </p>
                             </div>
 
                             <div class="w-full h-[170px] border-gray-300 flex flex-col items-center justify-center ">
                                 <p class="font-semibold text-start text-3xl text-black px-4 w-full"> Utilizado: </p>
                                 <p class="font-bold text-[70px] text-[#0A2463] w-[100px]">
-                                    75°
+                                    {{gorduraDesejada}}
                                 </p>
                             </div>
                         </div>
