@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SocketIoService } from '../socket-io.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,9 +10,28 @@ export class DashboardComponent implements OnInit {
   stackedData: any;
   stackedOptions: any;
 
+  dadosPasteurizacao:any;
+  dadosCentrifugacao:any;
 
 
-  constructor() { }
+  constructor(private socketService:SocketIoService){
+    this.socketService.listenToServer("Pasteurizacao").subscribe(change => {
+      this.onChangePasteurizacao(change)
+    })
+    this.socketService.listenToServer("Centrifugacao").subscribe(change => {
+        this.onChangeCentrifugacao(change)
+      })
+  }
+
+  onChangePasteurizacao(change:any){
+    this.dadosPasteurizacao = change;
+    console.log(change)
+  }
+
+  onChangeCentrifugacao(change:any){
+    this.dadosCentrifugacao = change;
+    console.log(change)
+  }
 
   ngOnInit(): void {
     this.stackedData = {
