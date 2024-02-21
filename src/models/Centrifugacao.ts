@@ -5,4 +5,6 @@ export class Centrifugacao{
     quantidade: number = 0;
     tipo: string = "";
     gordura: number = 0 ;
+    totalGordura:number = 0;
+    gorduraUsada: number = 0;
 }

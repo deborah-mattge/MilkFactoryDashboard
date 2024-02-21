@@ -16,17 +16,16 @@ export class DashboardComponent implements OnInit {
   dadosCentrifugacao!: Centrifugacao;
   temperatura: number = 0;
   segundosFaltantes: number = 0;
-  procedimento: string = '';
+  procedimento: string = 'Em Espera...';
   quantidade: number = 0;
   tipo: string = '';
-  gordura: number = 0;
-  gorduraTotal: number = 0;
-  gorduraDesejada: number = 0;
+  gordura: string = "";
+  gorduraTotal: string = "";
+  gorduraDesejada: string = "";
   leiteIntegralTotal: number = 0;
   leiteSemiTotal: number = 0;
   leiteDesnatadoTotal: number = 0;
   iogurte: number = 0;
-  cremeDeLeite: number = 0;
   queijo: number = 0;
 
   constructor(private socketService: SocketIoService) {
@@ -45,31 +44,12 @@ export class DashboardComponent implements OnInit {
     this.procedimento = this.dadosPasteurizacao.procedimento;
     this.quantidade = this.dadosPasteurizacao.quantidade;
     this.tipo = this.dadosPasteurizacao.tipo;
+    this.gordura = "0";
+    this.gorduraDesejada = "0";
+    this.gorduraTotal = "0";
 
-    console.log(change);
-
-    switch (this.tipo) {
-      case 'INTEGRAL':
-        this.leiteIntegralTotal += this.quantidade;
-        break;
-      case 'SEMIDESNATADO':
-        this.leiteSemiTotal += this.quantidade;
-        break;
-      case 'DESNATADO':
-        this.leiteDesnatadoTotal += this.quantidade;
-        break;
-      case 'IOGURTE':
-        this.iogurte += this.quantidade;
-        break;
-      case 'QUEIJO':
-        this.queijo += this.quantidade;
-        break;
-        case "CREME DE LEITE":
-         this.cremeDeLeite+=this.quantidade;
-        break;
-    }
   }
-
+  
   onChangeCentrifugacao(change: any) {
     this.dadosCentrifugacao = change;
     this.temperatura = this.dadosCentrifugacao.temperatura;
@@ -77,25 +57,40 @@ export class DashboardComponent implements OnInit {
     this.procedimento = this.dadosCentrifugacao.procedimento;
     this.quantidade = this.dadosCentrifugacao.quantidade;
     this.tipo = this.dadosCentrifugacao.tipo;
-    this.gordura = this.dadosCentrifugacao.gordura;
-    this.gorduraTotal += this.gordura;
-
-    if (
-      this.dadosCentrifugacao.tipo == 'INTEGRAL' ||
-      this.dadosCentrifugacao.tipo == 'IOGURTE' ||
-      this.dadosCentrifugacao.tipo == 'QUEIJO'
-    ) {
-      this.gorduraDesejada = (this.quantidade / 100) * 3;
-    } else if (this.dadosCentrifugacao.tipo == 'SEMIDESNATADO') {
-      this.gorduraDesejada = this.quantidade / 100;
-    } else if (this.dadosCentrifugacao.tipo == 'DESNATADO') {
-      this.gorduraDesejada = (this.quantidade / 100) * 0.3;
+    this.gordura = this.dadosCentrifugacao.gordura.toFixed(2);
+    this.gorduraDesejada = this.dadosCentrifugacao.gorduraUsada.toFixed(2);
+    this.gorduraTotal = this.dadosCentrifugacao.totalGordura.toFixed(2);
+    if(this.segundosFaltantes == 0){
+      if(this.tipo ==  'INTEGRAL'){
+        this.leiteIntegralTotal += this.quantidade;
+      }
+      if(this.tipo ==  'SEMIDESNATADO'){
+        this.leiteSemiTotal += this.quantidade; 
+      }
+      if(this.tipo ==  'DESNATADO'){
+        this.leiteDesnatadoTotal += this.quantidade;
+      }
+      if(this.tipo ==  'IOGURTE'){
+        this.iogurte += this.quantidade;
+      }
+      if(this.tipo ==  'QUEIJO'){
+        this.queijo += this.quantidade;
+      }
+      this.setData();
     }
-
-    console.log(change);
+    setTimeout(() => {
+      this.gordura = "0";
+      this.gorduraDesejada = "0";
+      this.gorduraTotal = "0";
+      this.segundosFaltantes = 0;
+      this.quantidade = 0;
+      this.procedimento = "Em Espera..."
+       this.temperatura = 0;
+     }, 100000);
   }
 
-  ngOnInit(): void {
+
+  setData():void{
     this.stackedData = {
       labels: ['January'],
       datasets: [
@@ -119,12 +114,6 @@ export class DashboardComponent implements OnInit {
         },
         {
           type: 'bar',
-          label: 'Creme de leite',
-          backgroundColor: '#5C0A63',
-          data: [this.cremeDeLeite],
-        },
-        {
-          type: 'bar',
           label: 'Queijo',
           backgroundColor: '#630A3F',
           data: [this.queijo],
@@ -137,6 +126,10 @@ export class DashboardComponent implements OnInit {
         },
       ],
     };
+  }
+
+  ngOnInit(): void {
+    this.setData()
     this.stackedOptions = {
       indexAxis: 'y',
       plugins: {

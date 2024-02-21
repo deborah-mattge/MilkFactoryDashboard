@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-12">
         
             <h1 class="text-black font-bold  text-4xl ">
-                PROCESSO:<b class="text-[#0A2463] font-bold" >{{procedimento}}</b>
+                PROCESSO:<b class="text-[#0A2463] font-bold" >{{"   " + (procedimento == "Adicionando" ? procedimento + " Gordura" : procedimento)}}</b>
             </h1>
 
         <div class="flex gap-[60px] items-center">
@@ -44,22 +44,21 @@
                 </div>
             </div>
 
-            <div class=" flex flex-col gap-[60px]">
+            <div  class=" flex flex-col gap-[60px]" >
                 <div class="card w-[600px] ">
                     <p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
                 </div>
 
-
-                <div>
+                <div *ngIf="procedimento != 'Pasteurizacao' && procedimento != 'Em espera...'">
                     <p class="font-semibold  text-2xl text-[#6b6b6b] w-[310px]">gordura retirada: </p>
 
                     <div class="w-[600px] h-[340px] bg-[#EBEBEB] rounded-2xl flex items-center ">
 
                         <div
-                            class="w-[200px] h-full border-gray-300 border-r-2  flex flex-col justify-center relative  items-center">
+                            class="w-[250px] h-full border-gray-300 border-r-2  flex flex-col justify-center relative  items-center">
                             <p class="font-semibold absolute top-20 text-3xl text-center text-black w-full"> Total </p>
 
-                            <p class="font-bold text-[70px] text-black w-[100px]">
+                            <p class="font-bold text-[70px] text-black w-[150px]">
                                {{gorduraTotal}}
                             </p>
                         </div>
