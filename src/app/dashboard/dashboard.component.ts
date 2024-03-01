@@ -115,7 +115,7 @@ export class DashboardComponent implements OnInit {
         {
           type: 'bar',
           label: 'Queijo',
-          backgroundColor: '#630A3F',
+          backgroundColor: '#7D0929',
           data: [this.queijo],
         },
         {
